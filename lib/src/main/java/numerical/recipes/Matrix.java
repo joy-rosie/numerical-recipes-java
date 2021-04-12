@@ -29,4 +29,27 @@ public class Matrix {
     public Matrix() {
         this(0, 0);
     }
+
+    public Matrix(double[][] array) {
+        this.array = array;
+        this.n = array.length;
+        this.m = array[0].length;
+    }
+
+    public static Matrix add(Matrix A, Matrix B) throws Exception {
+        return A.add(B);
+    }
+
+    public Matrix add(Matrix B) throws Exception {
+        if ((B.n != this.n) || (B.m != this.m)) {
+            throw new Exception("Dimensions are not equal");
+        }
+        Matrix newMatrix = new Matrix(this.n, this.m);
+        for (int i=0; i < this.n; i++) {
+            for (int j=0; j < this.m; j++) {
+                newMatrix.array[i][j] = this.array[i][j] + B.array[i][j];
+            }
+        }
+        return newMatrix;
+    }
 }

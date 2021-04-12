@@ -29,5 +29,21 @@ public class MatrixTest {
         double[][] expected = {{1}};
         assertArrayEquals(matrix.array, expected);
     }
+    //----------------------------------------Method testing------------------------------------------------------------
+    @Test
+    public void testMatrixAdd() throws Exception {
+        Matrix A = new Matrix(1, 1, 1);
+        Matrix B = new Matrix(1, 1, 1);
+        Matrix C = new Matrix(1, 1, 2);
+        assertArrayEquals(A.add(B).array,C.array);
+    }
+
+    @Test
+    public void testMatrixAddException() throws Exception {
+        Matrix A = new Matrix(2, 1, 1);
+        Matrix B = new Matrix(1, 1, 1);
+        Exception thrown = assertThrows(Exception.class, () -> A.add(B));
+        assertEquals("Dimensions are not equal", thrown.getMessage());
+    }
 
 }
