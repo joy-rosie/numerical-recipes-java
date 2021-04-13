@@ -22,6 +22,7 @@ public class Matrix {
                 throw new Exception("Inconsistent array dimensions");
             }
             // Copy array to make sure we do not reference input array
+            // https://stackoverflow.com/questions/1697250/difference-between-various-array-copy-methods
             System.arraycopy(array[i], 0, this.array[i], 0, this.m);
         }
     }
@@ -32,6 +33,7 @@ public class Matrix {
         this.m = m;
 
         for (int i=0; i < this.n; i++) {
+            // Could use Arrays.fill(this.array[i], value) instead
             for (int j=0; j < this.m; j++) {
                 this.array[i][j] = value;
             }

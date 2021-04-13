@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 
 public class MatrixTest {
 
+    // Constructor------------------------------------------------------------------------------------------------------
+
     @Test
     public void testMatrixConstructorEmpty() throws Exception {
         double[][] expected = new double[0][0];
@@ -90,9 +92,21 @@ public class MatrixTest {
         assertArrayEquals(expected, matrix.getArray());
     }
 
-    //----------------------------------------Method testing------------------------------------------------------------
+    // Equals-----------------------------------------------------------------------------------------------------------
+
     @Test
-    public void testMatrixEqualsTrue() throws Exception {
+    public void testMatrixEqualsTrueEmpty() throws Exception {
+        Matrix A = new Matrix();
+        Matrix B = new Matrix();
+        boolean expected = true;
+
+        boolean equals = A.equals(B);
+
+        assertEquals(expected, equals);
+    }
+
+    @Test
+    public void testMatrixEqualsTrueNonEmpty() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
         boolean expected = true;
@@ -124,8 +138,21 @@ public class MatrixTest {
         assertEquals(expected, equals);
     }
 
+    // Add--------------------------------------------------------------------------------------------------------------
+
     @Test
-    public void testMatrixAddMatrix() throws Exception {
+    public void testMatrixAddMatrixEmpty() throws Exception {
+        Matrix A = new Matrix();
+        Matrix B = new Matrix();
+        Matrix expected = new Matrix();
+
+        Matrix C = A.add(B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixAddMatrixNonEmpty() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix B = new Matrix(new double[][]{{5, 6}, {7, 8}});
         Matrix expected = new Matrix(new double[][]{{6, 8}, {10, 12}});
@@ -185,6 +212,19 @@ public class MatrixTest {
         Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
 
         Matrix C = Matrix.add(a, B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    // Multiply---------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixMultiplyEmpty() throws Exception {
+        Matrix A = new Matrix();
+        Matrix B = new Matrix();
+        Matrix expected = new Matrix();
+
+        Matrix C = A.multiply(B);
 
         assertTrue(expected.equals(C));
     }
