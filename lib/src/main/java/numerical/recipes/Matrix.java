@@ -171,6 +171,10 @@ public class Matrix {
         return M;
     }
 
+    public static Matrix transpose(Matrix M) throws Exception {
+        return M.transpose();
+    }
+
     public Matrix concatenateVertical(Matrix B) throws Exception {
 
         if (this.m != B.m) {
@@ -189,6 +193,10 @@ public class Matrix {
 
     }
 
+    public static Matrix concatenateVertical(Matrix A, Matrix B) throws Exception {
+        return A.concatenateVertical(B);
+    }
+
     public Matrix concatenateHorizontal(Matrix B) throws Exception {
 
         if (this.n != B.n) {
@@ -198,6 +206,10 @@ public class Matrix {
         // This might not be the most efficient in terms of memory
         return this.transpose().concatenateVertical(B.transpose()).transpose();
 
+    }
+
+    public static Matrix concatenateHorizontal(Matrix A, Matrix B) throws Exception {
+        return A.concatenateHorizontal(B);
     }
 
 }

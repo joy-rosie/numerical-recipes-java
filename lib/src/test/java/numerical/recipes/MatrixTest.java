@@ -370,6 +370,16 @@ public class MatrixTest {
         assertTrue(expected.equals(M));
     }
 
+    @Test
+    public void testMatrixTransposeStatic() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}, {5, 6}});
+        Matrix expected = new Matrix(new double[][]{{1, 3, 5}, {2, 4, 6}});
+
+        Matrix M = Matrix.transpose(A);
+
+        assertTrue(expected.equals(M));
+    }
+
     // concatenateVertical--------------------------------------------------------------------------------------------
 
     @Test
@@ -403,6 +413,17 @@ public class MatrixTest {
         assertEquals(expected, thrown.getMessage());
     }
 
+    @Test
+    public void testMatrixConcatenateVerticalStatic() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5, 6}});
+        Matrix expected = new Matrix(new double[][]{{1, 2}, {3, 4}, {5, 6}});
+
+        Matrix M = Matrix.concatenateVertical(A, B);
+
+        assertTrue(expected.equals(M));
+    }
+
     // concatenateHorizontal--------------------------------------------------------------------------------------------
 
     @Test
@@ -434,6 +455,17 @@ public class MatrixTest {
 
         Exception thrown = assertThrows(MatrixException.class, () -> A.concatenateHorizontal(B));
         assertEquals(expected, thrown.getMessage());
+    }
+
+    @Test
+    public void testMatrixConcatenateHorizontalStatic() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5}, {6}});
+        Matrix expected = new Matrix(new double[][]{{1, 2, 5}, {3, 4, 6}});
+
+        Matrix M = Matrix.concatenateHorizontal(A, B);
+
+        assertTrue(expected.equals(M));
     }
 
 }
