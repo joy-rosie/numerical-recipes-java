@@ -8,23 +8,33 @@ public class Matrix {
     final int n;
     final int m;
 
-    public double[][] getArray() throws Exception{
-        return this.array;
+    public static double[][] copyArray(double[][] array, int n, int m) throws Exception {
+        double[][] arrayCopy = new double[n][m];
+        for (int i=0; i < n; i++) {
+            if (array[i].length != m) {
+                throw new Exception("Inconsistent array dimensions");
+            }
+            // Copy array to make sure we do not reference input array
+            // https://stackoverflow.com/questions/1697250/difference-between-various-array-copy-methods
+            System.arraycopy(array[i], 0, arrayCopy[i], 0, m);
+        }
+        return arrayCopy;
+    }
+
+    public double[][] getArray() throws Exception {
+        return copyArray(this.array, this.n, this.m);
     }
 
     public Matrix(double[][] array) throws Exception {
         this.n = array.length;
         this.m = array[0].length;
-        this.array = new double[this.n][this.m];
+        this.array = copyArray(array, this.n, this.m);
+    }
 
-        for (int i=0; i < this.n; i++) {
-            if (array[i].length != this.m) {
-                throw new Exception("Inconsistent array dimensions");
-            }
-            // Copy array to make sure we do not reference input array
-            // https://stackoverflow.com/questions/1697250/difference-between-various-array-copy-methods
-            System.arraycopy(array[i], 0, this.array[i], 0, this.m);
-        }
+    public Matrix(Matrix matrix) throws Exception {
+        this.n = matrix.n;
+        this.m = matrix.m;
+        this.array = matrix.getArray();
     }
 
     public Matrix(double value, int n, int m) throws Exception {
@@ -57,7 +67,7 @@ public class Matrix {
     }
 
     public boolean equals(Matrix B) throws Exception {
-        return Arrays.deepEquals(this.getArray(), B.getArray());
+        return Arrays.deepEquals(this.array, B.array);
     }
 
     public Matrix add(Matrix B) throws Exception {

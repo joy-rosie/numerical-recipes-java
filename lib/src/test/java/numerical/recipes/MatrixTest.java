@@ -49,6 +49,16 @@ public class MatrixTest {
     }
 
     @Test
+    public void testMatrixConstructorMatrix() throws Exception {
+        Matrix matrixInput = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        double[][] expected = {{1, 2}, {3, 4}};
+
+        Matrix matrix = new Matrix(matrixInput);
+
+        assertArrayEquals(expected, matrix.getArray());
+    }
+
+    @Test
     public void testMatrixConstructorValueNM() throws Exception {
         double value = 1;
         int n = 2;
@@ -91,6 +101,34 @@ public class MatrixTest {
 
         assertArrayEquals(expected, matrix.getArray());
     }
+
+    // copyArray--------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixCopyArrayStatic() throws Exception {
+        int n = 2;
+        int m = 2;
+        double[][] array = {{1, 2}, {3, 4}};
+        double[][] expected = {{1, 2}, {3, 4}};
+
+        double[][] actual = Matrix.copyArray(array, n, m);
+
+        assertArrayEquals(expected, actual);
+        assertNotSame(expected, actual);
+    }
+
+    // getArray---------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixGetArray() throws Exception {
+        Matrix matrix = new Matrix(2);
+        double[][] expected = {{Double.NaN, Double.NaN}, {Double.NaN, Double.NaN}};
+
+        double[][] array = matrix.getArray();
+
+        assertArrayEquals(expected, array);
+    }
+
 
     // Equals-----------------------------------------------------------------------------------------------------------
 
