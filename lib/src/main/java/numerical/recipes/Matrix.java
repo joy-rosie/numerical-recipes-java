@@ -8,7 +8,7 @@ public class Matrix {
     final int n;
     final int m;
 
-    public double[][] getArray() {
+    public double[][] getArray() throws Exception{
         return this.array;
     }
 

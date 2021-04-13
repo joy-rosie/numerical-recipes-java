@@ -29,7 +29,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions1() throws Exception {
+    public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions1() {
         double[][] array = {{1, 2}, {3, 4, 5}};
         String expected = "Inconsistent array dimensions";
 
@@ -38,7 +38,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions2() throws Exception {
+    public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions2() {
         double[][] array = {{1, 2}, {3}};
         String expected = "Inconsistent array dimensions";
 
