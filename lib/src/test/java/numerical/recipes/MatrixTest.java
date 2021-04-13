@@ -3,6 +3,7 @@
  */
 package numerical.recipes;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -256,62 +257,6 @@ public class MatrixTest {
     }
 
     // Multiply---------------------------------------------------------------------------------------------------------
-
-    @Test
-    public void testMatrixMultiplyEmpty() throws Exception {
-        Matrix A = new Matrix();
-        Matrix B = new Matrix();
-        Matrix expected = new Matrix();
-
-        Matrix C = A.multiply(B);
-
-        assertTrue(expected.equals(C));
-    }
-
-    @Test
-    public void testMatrixMultiplyOneDimension() throws Exception {
-        Matrix A = new Matrix(new double[][]{{1}});
-        Matrix B = new Matrix(new double[][]{{2}});
-        Matrix expected = new Matrix(new double[][]{{2}});
-
-        Matrix C = A.multiply(B);
-
-        assertTrue(expected.equals(C));
-    }
-
-    @Test
-    public void testMatrixMultiplyMultipleDimensionsIdentity() throws Exception {
-        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
-        Matrix B = new Matrix(new double[][]{{1, 0}, {0, 1}});
-        Matrix expected = new Matrix(new double[][]{{1, 2}, {3, 4}});
-
-        Matrix C = A.multiply(B);
-
-        assertTrue(expected.equals(C));
-    }
-
-    @Test
-    public void testMatrixMultiplyMultipleDimensionsSquare() throws Exception {
-        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
-        Matrix B = new Matrix(new double[][]{{1, 2}, {1, 1}});
-        Matrix expected = new Matrix(new double[][]{{3, 4}, {7, 10}});
-
-        Matrix C = A.multiply(B);
-
-        assertTrue(expected.equals(C));
-    }
-
-    @Test
-    public void testMatrixMultiplyMultipleDimensionsRectangle() throws Exception {
-        Matrix A = new Matrix(new double[][]{{1, 2}});
-        Matrix B = new Matrix(new double[][]{{1, 2}, {1, 1}});
-        Matrix expected = new Matrix(new double[][]{{3, 4}});
-
-        Matrix C = A.multiply(B);
-
-        assertTrue(expected.equals(C));
-    }
-
     @Test
     public void testMatrixMultiplyException() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2, 3}});
@@ -323,7 +268,17 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixMultiplyDouble() throws Exception {
+    public void testMatrixMultiplyEmpty() throws Exception {
+        Matrix A = new Matrix();
+        Matrix B = new Matrix();
+        Matrix expected = new Matrix();
+
+        Matrix C = A.multiply(B);
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixScalarMultiplication() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         double B = 2;
         Matrix expected = new Matrix(new double[][]{{2, 4}, {6, 8}});
@@ -334,18 +289,42 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixMultiplyStaticMatrixMatrix() throws Exception {
-        Matrix A = new Matrix(new double[][]{{1}});
-        Matrix B = new Matrix(new double[][]{{2}});
-        Matrix expected = new Matrix(new double[][]{{2}});
-
-        Matrix C = Matrix.multiply(A, B);
-
-        assertTrue(expected.equals(C));
+    public void testMatrixMultiplyOneDimension() throws Exception {
+        testMatrixMultiplyHelper(new double[][]{{1}}, new double[][]{{2}}, new double[][]{{2}});
     }
 
     @Test
-    public void testMatrixMultiplyStaticMatrixDouble() throws Exception {
+    public void testMatrixMultiplyMultipleDimensionsIdentity() throws Exception {
+        testMatrixMultiplyHelper(new double[][]{{1, 2}, {3, 4}}, new double[][]{{1, 0}, {0, 1}}, new double[][]{{1, 2}, {3, 4}});
+    }
+
+    @Test
+    public void testMatrixMultiplyMultipleDimensionsSquare() throws Exception {
+        testMatrixMultiplyHelper(new double[][]{{1, 2}, {3, 4}}, new double[][]{{1, 2}, {1, 1}}, new double[][]{{3, 4}, {7, 10}});
+    }
+
+    @Test
+    public void testMatrixMultiplyMultipleDimensionsRectangle() throws Exception {
+        testMatrixMultiplyHelper(new double[][]{{1, 2}}, new double[][]{{1, 2}, {1, 1}}, new double[][]{{3, 4}});
+    }
+
+    @Test
+    public void testMatrixMultiplyStaticMatrixMatrix() throws Exception {
+        testMatrixMultiplyHelper(new double[][]{{1}}, new double[][]{{2}}, new double[][]{{2}});
+    }
+
+    @Ignore
+    public void testMatrixMultiplyHelper(double[][] A, double[][] B, double[][] C) throws Exception {
+        Matrix AMatrix = new Matrix(A);
+        Matrix BMatrix = new Matrix(B);
+        Matrix expected = new Matrix(C);
+
+        Matrix CCalculated = AMatrix.multiply(BMatrix);
+        assertTrue(expected.equals(CCalculated));
+    }
+
+    @Test
+    public void testMatrixStaticMethodScalarMultiplicationFirstArgumentMatrix() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         double B = 2;
         Matrix expected = new Matrix(new double[][]{{2, 4}, {6, 8}});
@@ -356,10 +335,21 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixMultiplyStaticDoubleMatrix() throws Exception {
+    public void testMatrixStaticMethodScalarMultiplicationFirstArgumentScalar() throws Exception {
         double A = 2;
         Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix expected = new Matrix(new double[][]{{2, 4}, {6, 8}});
+
+        Matrix C = Matrix.multiply(A, B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixStaticMethodMatrixMultiplication() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 0}, {0, 1}});
+        Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix expected = new Matrix(new double[][]{{1, 2}, {3, 4}});
 
         Matrix C = Matrix.multiply(A, B);
 
