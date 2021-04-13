@@ -22,10 +22,10 @@ public class MatrixTest {
 
     @Test
     public void testMatrixConstructorMatrix() throws Exception {
-        Matrix matrixInput = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix M = new Matrix(new double[][]{{1, 2}, {3, 4}});
         double[][] expected = {{1, 2}, {3, 4}};
 
-        Matrix matrix = new Matrix(matrixInput);
+        Matrix matrix = new Matrix(M);
 
         assertArrayEquals(expected, matrix.getArray());
     }

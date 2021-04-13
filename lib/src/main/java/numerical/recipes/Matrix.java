@@ -25,10 +25,10 @@ public class Matrix {
         return copyArray(this.array, this.n, this.m);
     }
 
-    public Matrix(Matrix matrix) throws Exception {
-        this.n = matrix.n;
-        this.m = matrix.m;
-        this.array = matrix.getArray();
+    public Matrix(Matrix M) throws Exception {
+        this.n = M.n;
+        this.m = M.m;
+        this.array = M.getArray();
     }
 
     public Matrix(double[][] array) throws Exception {
