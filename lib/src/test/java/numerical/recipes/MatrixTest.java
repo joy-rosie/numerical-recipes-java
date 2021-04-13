@@ -359,8 +359,8 @@ public class MatrixTest {
     // transpose--------------------------------------------------------------------------------------------------------
     @Test
     public void testMatrixTranspose() throws Exception {
-        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
-        Matrix expected = new Matrix(new double[][]{{1, 3}, {2, 4}});
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}, {5, 6}});
+        Matrix expected = new Matrix(new double[][]{{1, 3, 5}, {2, 4, 6}});
 
         Matrix M = A.transpose();
 
