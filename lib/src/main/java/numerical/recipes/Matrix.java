@@ -74,20 +74,21 @@ public class Matrix {
     }
 
     public Matrix add(Matrix B) throws Exception {
-
-        if ((this.n != B.n) || (this.m != B.m)) {
-            throw new MatrixException(MatrixErrorType.AddDimensionMismatch);
-        }
-
         Matrix C = new Matrix(this.n, this.m);
-        for (int i=0; i < this.n; i++) {
-            for (int j=0; j < this.m; j++) {
-                C.array[i][j] = this.array[i][j] + B.array[i][j];
+        try {
+            for (int i=0; i < this.n; i++) {
+                for (int j=0; j < this.m; j++) {
+                    C.array[i][j] = this.array[i][j] + B.array[i][j];
+                }
+            }
+        } catch (Exception e) {
+            if (this.n != B.n || this.m != B.m) {
+                throw new MatrixException(MatrixErrorType.AddDimensionMismatch, e);
+            } else {
+                throw e;
             }
         }
-
         return C;
-
     }
 
     public Matrix add(double b) throws Exception {
