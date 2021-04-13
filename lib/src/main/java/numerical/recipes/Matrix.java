@@ -75,8 +75,29 @@ public class Matrix {
 
     }
 
+    public Matrix add(double b) throws Exception {
+
+        Matrix C = new Matrix(this.n, this.m);
+        for (int i=0; i < this.n; i++) {
+            for (int j=0; j < this.m; j++) {
+                C.array[i][j] = this.array[i][j] + b;
+            }
+        }
+
+        return C;
+
+    }
+
     public static Matrix add(Matrix A, Matrix B) throws Exception {
         return A.add(B);
+    }
+
+    public static Matrix add(Matrix A, double b) throws Exception {
+        return A.add(b);
+    }
+
+    public static Matrix add(double a, Matrix B) throws Exception {
+        return B.add(a);
     }
 
     public Matrix multiply(Matrix B) throws Exception {

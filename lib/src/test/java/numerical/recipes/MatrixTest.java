@@ -125,7 +125,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixAdd() throws Exception {
+    public void testMatrixAddMatrix() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix B = new Matrix(new double[][]{{5, 6}, {7, 8}});
         Matrix expected = new Matrix(new double[][]{{6, 8}, {10, 12}});
@@ -136,7 +136,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixAddException() throws Exception {
+    public void testMatrixAddMatrixException() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix B = new Matrix(new double[][]{{1, 2}});
         String expected = "Dimensions are not equal";
@@ -146,12 +146,45 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixAddStatic() throws Exception {
+    public void testMatrixAddScalar() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        double b = 1;
+        Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
+
+        Matrix C = A.add(b);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixAddStaticMatrixMatrix() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix B = new Matrix(new double[][]{{5, 6}, {7, 8}});
         Matrix expected = new Matrix(new double[][]{{6, 8}, {10, 12}});
 
         Matrix C = Matrix.add(A, B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixAddStaticMatrixScalar() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        double b = 1;
+        Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
+
+        Matrix C = Matrix.add(A, b);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixAddStaticScalarMatrix() throws Exception {
+        double a = 1;
+        Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
+
+        Matrix C = Matrix.add(a, B);
 
         assertTrue(expected.equals(C));
     }
