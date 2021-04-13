@@ -159,4 +159,14 @@ public class Matrix {
         return B.multiply(a);
     }
 
+    public Matrix transpose() throws Exception {
+        Matrix M = new Matrix(this.n, this.m);
+        for (int i=0; i < M.n; i++) {
+            for (int j=0; j < M.m; j++) {
+                M.array[i][j] = this.array[j][i];
+            }
+        }
+        return M;
+    }
+
 }

@@ -366,4 +366,15 @@ public class MatrixTest {
         assertTrue(expected.equals(C));
     }
 
+    // transpose--------------------------------------------------------------------------------------------------------
+    @Test
+    public void testMatrixTranspose() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix expected = new Matrix(new double[][]{{1, 3}, {2, 4}});
+
+        Matrix M = A.transpose();
+
+        assertTrue(expected.equals(M));
+    }
+
 }
