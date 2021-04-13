@@ -206,7 +206,7 @@ public class MatrixTest {
     public void testMatrixAddMatrixException() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix B = new Matrix(new double[][]{{1, 2}});
-        String expected = "Dimensions are not equal";
+        String expected = MatrixErrorType.AddDimensionMismatch.getMessage();
 
         Exception thrown = assertThrows(Exception.class, () -> A.add(B));
         assertEquals(expected, thrown.getMessage());
@@ -261,7 +261,7 @@ public class MatrixTest {
     public void testMatrixMultiplyException() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2, 3}});
         Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
-        String expected = "Incompatible dimensions for multiplication";
+        String expected = MatrixErrorType.MultiplyDimensionMismatch.getMessage();
 
         Exception thrown = assertThrows(Exception.class, () -> A.multiply(B));
         assertEquals(expected, thrown.getMessage());

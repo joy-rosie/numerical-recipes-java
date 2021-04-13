@@ -76,7 +76,7 @@ public class Matrix {
     public Matrix add(Matrix B) throws Exception {
 
         if ((this.n != B.n) || (this.m != B.m)) {
-            throw new Exception("Dimensions are not equal");
+            throw new MatrixException(MatrixErrorType.AddDimensionMismatch);
         }
 
         Matrix C = new Matrix(this.n, this.m);
@@ -116,22 +116,23 @@ public class Matrix {
     }
 
     public Matrix multiply(Matrix B) throws Exception {
-
-        if (this.m != B.n) {
-            throw new Exception("Incompatible dimensions for multiplication");
-        }
-
         Matrix C = new Matrix(0, this.n, B.m);
-        for (int i=0; i < C.n; i++) {
-            for (int j=0; j < C.m; j++) {
-                for (int k=0; k < this.m; k++){
-                    C.array[i][j] += this.array[i][k] * B.array[k][j];
+        try {
+            for (int i=0; i < C.n; i++) {
+                for (int j=0; j < C.m; j++) {
+                    for (int k=0; k < this.m; k++){
+                        C.array[i][j] += this.array[i][k] * B.array[k][j];
+                    }
                 }
             }
+        } catch(Exception e) {
+            if (this.m != B.n) {
+                throw new MatrixException(MatrixErrorType.MultiplyDimensionMismatch, e);
+            } else {
+                throw e;
+            }
         }
-
         return C;
-
     }
 
     public Matrix multiply(double b) throws Exception {
