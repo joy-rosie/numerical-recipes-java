@@ -121,8 +121,29 @@ public class Matrix {
 
     }
 
+    public Matrix multiply(double b) throws Exception {
+
+        Matrix C = new Matrix(this.n, this.m);
+        for (int i=0; i < C.n; i++) {
+            for (int j=0; j < C.m; j++) {
+                C.array[i][j] = this.array[i][j] * b;
+            }
+        }
+
+        return C;
+
+    }
+
     public static Matrix multiply(Matrix A, Matrix B) throws Exception {
         return A.multiply(B);
+    }
+
+    public static Matrix multiply(Matrix A, double b) throws Exception {
+        return A.multiply(b);
+    }
+
+    public static Matrix multiply(double a, Matrix B) throws Exception {
+        return B.multiply(a);
     }
 
 }

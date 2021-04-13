@@ -173,7 +173,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixAddScalar() throws Exception {
+    public void testMatrixAddDouble() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         double b = 1;
         Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
@@ -195,7 +195,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixAddStaticMatrixScalar() throws Exception {
+    public void testMatrixAddStaticMatrixDouble() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
         double b = 1;
         Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
@@ -206,7 +206,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixAddStaticScalarMatrix() throws Exception {
+    public void testMatrixAddStaticDoubleMatrix() throws Exception {
         double a = 1;
         Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
         Matrix expected = new Matrix(new double[][]{{2, 3}, {4, 5}});
@@ -284,12 +284,45 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixMultiplyStatic() throws Exception {
+    public void testMatrixMultiplyDouble() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        double b = 2;
+        Matrix expected = new Matrix(new double[][]{{2, 4}, {6, 8}});
+
+        Matrix C = A.multiply(b);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyStaticMatrixMatrix() throws Exception {
         Matrix A = new Matrix(new double[][]{{1}});
         Matrix B = new Matrix(new double[][]{{2}});
         Matrix expected = new Matrix(new double[][]{{2}});
 
         Matrix C = Matrix.multiply(A, B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyStaticMatrixDouble() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        double b = 2;
+        Matrix expected = new Matrix(new double[][]{{2, 4}, {6, 8}});
+
+        Matrix C = Matrix.multiply(A, b);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyStaticDoubleMatrix() throws Exception {
+        double a = 2;
+        Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix expected = new Matrix(new double[][]{{2, 4}, {6, 8}});
+
+        Matrix C = Matrix.multiply(a, B);
 
         assertTrue(expected.equals(C));
     }
