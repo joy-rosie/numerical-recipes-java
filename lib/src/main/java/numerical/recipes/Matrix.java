@@ -25,16 +25,16 @@ public class Matrix {
         return copyArray(this.array, this.n, this.m);
     }
 
-    public Matrix(double[][] array) throws Exception {
-        this.n = array.length;
-        this.m = array[0].length;
-        this.array = copyArray(array, this.n, this.m);
-    }
-
     public Matrix(Matrix matrix) throws Exception {
         this.n = matrix.n;
         this.m = matrix.m;
         this.array = matrix.getArray();
+    }
+
+    public Matrix(double[][] array) throws Exception {
+        this.n = array.length;
+        this.m = array[0].length;
+        this.array = copyArray(array, this.n, this.m);
     }
 
     public Matrix(double value, int n, int m) throws Exception {

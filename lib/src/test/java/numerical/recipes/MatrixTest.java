@@ -21,6 +21,16 @@ public class MatrixTest {
     }
 
     @Test
+    public void testMatrixConstructorMatrix() throws Exception {
+        Matrix matrixInput = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        double[][] expected = {{1, 2}, {3, 4}};
+
+        Matrix matrix = new Matrix(matrixInput);
+
+        assertArrayEquals(expected, matrix.getArray());
+    }
+
+    @Test
     public void testMatrixConstructorArray() throws Exception {
         double[][] array = {{1, 2}, {3, 4}};
         double[][] expected = {{1, 2}, {3, 4}};
@@ -46,16 +56,6 @@ public class MatrixTest {
 
         Exception thrown = assertThrows(Exception.class, () -> new Matrix(array));
         assertEquals(expected, thrown.getMessage());
-    }
-
-    @Test
-    public void testMatrixConstructorMatrix() throws Exception {
-        Matrix matrixInput = new Matrix(new double[][]{{1, 2}, {3, 4}});
-        double[][] expected = {{1, 2}, {3, 4}};
-
-        Matrix matrix = new Matrix(matrixInput);
-
-        assertArrayEquals(expected, matrix.getArray());
     }
 
     @Test
