@@ -46,4 +46,40 @@ public class MatrixTest {
         assertEquals("Dimensions are not equal", thrown.getMessage());
     }
 
+    @Test
+    public void testMatrixMultiply() throws Exception {
+        // Simple example 1 dimension
+        Matrix A = new Matrix(1, 1, 1);
+        Matrix B = new Matrix(1, 1, 1);
+        Matrix C = new Matrix(1, 1, 1);
+        assertArrayEquals(A.multiply(B).array,C.array);
+        // Simple example 2 by 2
+        Matrix D = new Matrix(2, 2, 1);
+        Matrix E = new Matrix(2, 2, 1);
+        Matrix F = new Matrix(2, 2, 2);
+        assertArrayEquals(D.multiply(E).array,F.array);
+        // Different dimensions 2 by 3 multiplied by 3 by 2
+        Matrix G = new Matrix(2, 3, 1);
+        Matrix H = new Matrix(3, 2, 1);
+        Matrix I = new Matrix(2, 2, 3);
+        assertArrayEquals(G.multiply(H).array,I.array);
+        // Multiply by the identity
+        Matrix J = new Matrix(new double[][] {{1, 2}, {3, 4}});
+        Matrix K = new Matrix(new double[][] {{1, 0}, {0, 1}});
+        assertArrayEquals(J.multiply(K).array,J.array);
+        // Multiply non-trivial
+        Matrix M = new Matrix(new double[][] {{1, 2}, {3, 4}});
+        Matrix N = new Matrix(new double[][] {{1, 2}, {1, 1}});
+        Matrix O = new Matrix(new double[][] {{3, 4}, {7, 10}});
+        assertArrayEquals(M.multiply(N).array,O.array);
+    }
+
+    @Test
+    public void testMatrixMultiplyException() throws Exception {
+        Matrix A = new Matrix(2, 3, 1);
+        Matrix B = new Matrix(1, 1, 1);
+        Exception thrown = assertThrows(Exception.class, () -> A.multiply(B));
+        assertEquals("Incompatible dimensions for multiplication", thrown.getMessage());
+    }
+
 }

@@ -52,4 +52,23 @@ public class Matrix {
         }
         return newMatrix;
     }
+
+    public static Matrix multiply(Matrix A, Matrix B) throws Exception {
+        return A.add(B);
+    }
+
+    public Matrix multiply(Matrix B) throws Exception {
+        if (B.n != this.m) {
+            throw new Exception("Incompatible dimensions for multiplication");
+        }
+        Matrix newMatrix = new Matrix(this.n, B.m, 0);
+        for (int i=0; i < this.n; i++) {
+            for (int j=0; j < B.m; j++) {
+                for (int k=0; k < this.m; k++){
+                    newMatrix.array[i][j] += this.array[i][k] * B.array[k][j];
+                }
+            }
+        }
+        return newMatrix;
+    }
 }
