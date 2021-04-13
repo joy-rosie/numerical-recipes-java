@@ -33,7 +33,7 @@ public class Matrix {
         this.m = m;
 
         for (int i=0; i < this.n; i++) {
-            // Could use Arrays.fill(this.array[i], value) instead
+            // Could use Arrays.fill(this.array[i], value) instead but it is the same code
             for (int j=0; j < this.m; j++) {
                 this.array[i][j] = value;
             }
