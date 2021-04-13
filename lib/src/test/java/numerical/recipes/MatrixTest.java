@@ -10,40 +10,215 @@ import static org.junit.Assert.*;
 public class MatrixTest {
 
     @Test
-    public void testMatrixConstructorEmpty() {
-        Matrix matrix = new Matrix();
+    public void testMatrixConstructorEmpty() throws Exception {
         double[][] expected = new double[0][0];
-        assertArrayEquals(matrix.array, expected);
+
+        Matrix matrix = new Matrix();
+
+        assertArrayEquals(expected, matrix.getArray());
     }
 
     @Test
-    public void testMatrixConstructorSingleValueNaN() {
-        Matrix matrix = new Matrix(1, 1);
-        double[][] expected = {{Double.NaN}};
-        assertArrayEquals(matrix.array, expected);
+    public void testMatrixConstructorArray() throws Exception {
+        double[][] array = {{1, 2}, {3, 4}};
+        double[][] expected = {{1, 2}, {3, 4}};
+
+        Matrix matrix = new Matrix(array);
+
+        assertArrayEquals(expected, matrix.getArray());
     }
 
     @Test
-    public void testMatrixConstructorSingleValueOne() {
-        Matrix matrix = new Matrix(1, 1, 1);
-        double[][] expected = {{1}};
-        assertArrayEquals(matrix.array, expected);
+    public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions1() throws Exception {
+        double[][] array = {{1, 2}, {3, 4, 5}};
+        String expected = "Inconsistent array dimensions";
+
+        Exception thrown = assertThrows(Exception.class, () -> new Matrix(array));
+        assertEquals(expected, thrown.getMessage());
     }
+
+    @Test
+    public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions2() throws Exception {
+        double[][] array = {{1, 2}, {3}};
+        String expected = "Inconsistent array dimensions";
+
+        Exception thrown = assertThrows(Exception.class, () -> new Matrix(array));
+        assertEquals(expected, thrown.getMessage());
+    }
+
+    @Test
+    public void testMatrixConstructorValueNM() throws Exception {
+        double value = 1;
+        int n = 2;
+        int m = 3;
+        double[][] expected = {{1, 1, 1}, {1, 1, 1}};
+
+        Matrix matrix = new Matrix(value, n, m);
+
+        assertArrayEquals(matrix.getArray(), expected);
+    }
+
+    @Test
+    public void testMatrixConstructorValueN() throws Exception {
+        double value = 1;
+        int n = 2;
+        double[][] expected = {{1, 1}, {1, 1}};
+
+        Matrix matrix = new Matrix(value, n);
+
+        assertArrayEquals(matrix.getArray(), expected);
+    }
+
+    @Test
+    public void testMatrixConstructorNM() throws Exception {
+        int n = 2;
+        int m = 3;
+        double[][] expected = {{Double.NaN, Double.NaN, Double.NaN}, {Double.NaN, Double.NaN, Double.NaN}};
+
+        Matrix matrix = new Matrix(n, m);
+
+        assertArrayEquals(expected, matrix.getArray());
+    }
+
+    @Test
+    public void testMatrixConstructorN() throws Exception {
+        int n = 2;
+        double[][] expected = {{Double.NaN, Double.NaN}, {Double.NaN, Double.NaN}};
+
+        Matrix matrix = new Matrix(n);
+
+        assertArrayEquals(expected, matrix.getArray());
+    }
+
     //----------------------------------------Method testing------------------------------------------------------------
     @Test
+    public void testMatrixEqualsTrue() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        boolean expected = true;
+
+        boolean equals = A.equals(B);
+
+        assertEquals(expected, equals);
+    }
+
+    @Test
+    public void testMatrixEqualsFalseSameSize() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{3, 4}, {1, 2}});
+        boolean expected = false;
+
+        boolean equals = A.equals(B);
+
+        assertEquals(expected, equals);
+    }
+
+    @Test
+    public void testMatrixEqualsFalseDifferentSize() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}});
+        Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        boolean expected = false;
+
+        boolean equals = A.equals(B);
+
+        assertEquals(expected, equals);
+    }
+
+    @Test
     public void testMatrixAdd() throws Exception {
-        Matrix A = new Matrix(1, 1, 1);
-        Matrix B = new Matrix(1, 1, 1);
-        Matrix C = new Matrix(1, 1, 2);
-        assertArrayEquals(A.add(B).array,C.array);
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5, 6}, {7, 8}});
+        Matrix expected = new Matrix(new double[][]{{6, 8}, {10, 12}});
+
+        Matrix C = A.add(B);
+
+        assertTrue(expected.equals(C));
     }
 
     @Test
     public void testMatrixAddException() throws Exception {
-        Matrix A = new Matrix(2, 1, 1);
-        Matrix B = new Matrix(1, 1, 1);
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{1, 2}});
+        String expected = "Dimensions are not equal";
+
         Exception thrown = assertThrows(Exception.class, () -> A.add(B));
-        assertEquals("Dimensions are not equal", thrown.getMessage());
+        assertEquals(expected, thrown.getMessage());
+    }
+
+    @Test
+    public void testMatrixAddStatic() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5, 6}, {7, 8}});
+        Matrix expected = new Matrix(new double[][]{{6, 8}, {10, 12}});
+
+        Matrix C = Matrix.add(A, B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyOneDimension() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1}});
+        Matrix B = new Matrix(new double[][]{{2}});
+        Matrix expected = new Matrix(new double[][]{{2}});
+
+        Matrix C = A.multiply(B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyMultipleDimensionsIdentity() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{1, 0}, {0, 1}});
+        Matrix expected = new Matrix(new double[][]{{1, 2}, {3, 4}});
+
+        Matrix C = A.multiply(B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyMultipleDimensionsSquare() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{1, 2}, {1, 1}});
+        Matrix expected = new Matrix(new double[][]{{3, 4}, {7, 10}});
+
+        Matrix C = A.multiply(B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyMultipleDimensionsRectangle() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}});
+        Matrix B = new Matrix(new double[][]{{1, 2}, {1, 1}});
+        Matrix expected = new Matrix(new double[][]{{3, 4}});
+
+        Matrix C = A.multiply(B);
+
+        assertTrue(expected.equals(C));
+    }
+
+    @Test
+    public void testMatrixMultiplyException() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}});
+        Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        String expected = "Incompatible dimensions for multiplication";
+
+        Exception thrown = assertThrows(Exception.class, () -> A.multiply(B));
+        assertEquals(expected, thrown.getMessage());
+    }
+
+    @Test
+    public void testMatrixMultiplyStatic() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1}});
+        Matrix B = new Matrix(new double[][]{{2}});
+        Matrix expected = new Matrix(new double[][]{{2}});
+
+        Matrix C = Matrix.multiply(A, B);
+
+        assertTrue(expected.equals(C));
     }
 
     @Test

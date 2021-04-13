@@ -29,7 +29,8 @@ build
 hs_err_pid*
 
 # IntelliJ
-/.idea/
+.idea
+.cov
 
 # Keep gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.jar
