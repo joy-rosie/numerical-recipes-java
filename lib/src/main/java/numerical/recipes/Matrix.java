@@ -12,7 +12,7 @@ public class Matrix {
         double[][] arrayCopy = new double[n][m];
         for (int i=0; i < n; i++) {
             if (array[i].length != m) {
-                throw new Exception("Inconsistent array dimensions");
+                throw new MatrixException(MatrixErrorType.DimensionMismatch);
             }
             // Copy array to make sure we do not reference input array
             // https://stackoverflow.com/questions/1697250/difference-between-various-array-copy-methods
@@ -169,6 +169,35 @@ public class Matrix {
             }
         }
         return M;
+    }
+
+    public Matrix concatenateVertical(Matrix B) throws Exception {
+
+        if (this.m != B.m) {
+            throw new MatrixException(MatrixErrorType.ColumnDimensionMismatch);
+        }
+
+        Matrix C = new Matrix(this.n + B.n, this.m);
+        for (int i=0; i < this.n; i++) {
+            System.arraycopy(this.array[i], 0, C.array[i], 0, C.m);
+        }
+        for (int i=0; i < B.n; i++) {
+            System.arraycopy(B.array[i], 0, C.array[i + this.n], 0, C.m);
+        }
+
+        return C;
+
+    }
+
+    public Matrix concatenateHorizontal(Matrix B) throws Exception {
+
+        if (this.n != B.n) {
+            throw new MatrixException(MatrixErrorType.RowDimensionMismatch);
+        }
+
+        // This might not be the most efficient in terms of memory
+        return this.transpose().concatenateVertical(B.transpose()).transpose();
+
     }
 
 }

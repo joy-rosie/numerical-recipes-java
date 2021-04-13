@@ -44,18 +44,18 @@ public class MatrixTest {
     @Test
     public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions1() throws Exception {
         double[][] array = {{1, 2}, {3, 4, 5}};
-        String expected = "Inconsistent array dimensions";
+        String expected = MatrixErrorType.DimensionMismatch.getMessage();
 
-        Exception thrown = assertThrows(Exception.class, () -> new Matrix(array));
+        Exception thrown = assertThrows(MatrixException.class, () -> new Matrix(array));
         assertEquals(expected, thrown.getMessage());
     }
 
     @Test
     public void testMatrixConstructorExceptionArrayInconsistentArrayDimensions2() throws Exception {
         double[][] array = {{1, 2}, {3}};
-        String expected = "Inconsistent array dimensions";
+        String expected = MatrixErrorType.DimensionMismatch.getMessage();
 
-        Exception thrown = assertThrows(Exception.class, () -> new Matrix(array));
+        Exception thrown = assertThrows(MatrixException.class, () -> new Matrix(array));
         assertEquals(expected, thrown.getMessage());
     }
 
@@ -208,7 +208,7 @@ public class MatrixTest {
         Matrix B = new Matrix(new double[][]{{1, 2}});
         String expected = MatrixErrorType.AddDimensionMismatch.getMessage();
 
-        Exception thrown = assertThrows(Exception.class, () -> A.add(B));
+        Exception thrown = assertThrows(MatrixException.class, () -> A.add(B));
         assertEquals(expected, thrown.getMessage());
     }
 
@@ -263,7 +263,7 @@ public class MatrixTest {
         Matrix B = new Matrix(new double[][]{{1, 2}, {3, 4}});
         String expected = MatrixErrorType.MultiplyDimensionMismatch.getMessage();
 
-        Exception thrown = assertThrows(Exception.class, () -> A.multiply(B));
+        Exception thrown = assertThrows(MatrixException.class, () -> A.multiply(B));
         assertEquals(expected, thrown.getMessage());
     }
 
@@ -274,6 +274,7 @@ public class MatrixTest {
         Matrix expected = new Matrix();
 
         Matrix C = A.multiply(B);
+
         assertTrue(expected.equals(C));
     }
 
@@ -320,6 +321,7 @@ public class MatrixTest {
         Matrix expected = new Matrix(C);
 
         Matrix CCalculated = AMatrix.multiply(BMatrix);
+
         assertTrue(expected.equals(CCalculated));
     }
 
@@ -357,6 +359,7 @@ public class MatrixTest {
     }
 
     // transpose--------------------------------------------------------------------------------------------------------
+
     @Test
     public void testMatrixTranspose() throws Exception {
         Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}, {5, 6}});
@@ -365,6 +368,72 @@ public class MatrixTest {
         Matrix M = A.transpose();
 
         assertTrue(expected.equals(M));
+    }
+
+    // concatenateVertical--------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixConcatenateVertical() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5, 6}});
+        Matrix expected = new Matrix(new double[][]{{1, 2}, {3, 4}, {5, 6}});
+
+        Matrix M = A.concatenateVertical(B);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixConcatenateVerticalException1() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5}});
+        String expected = MatrixErrorType.ColumnDimensionMismatch.getMessage();
+
+        Exception thrown = assertThrows(MatrixException.class, () -> A.concatenateVertical(B));
+        assertEquals(expected, thrown.getMessage());
+    }
+
+    @Test
+    public void testMatrixConcatenateVerticalException2() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5, 6, 7}});
+        String expected = MatrixErrorType.ColumnDimensionMismatch.getMessage();
+
+        Exception thrown = assertThrows(MatrixException.class, () -> A.concatenateVertical(B));
+        assertEquals(expected, thrown.getMessage());
+    }
+
+    // concatenateHorizontal--------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixConcatenateHorizontal() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5}, {6}});
+        Matrix expected = new Matrix(new double[][]{{1, 2, 5}, {3, 4, 6}});
+
+        Matrix M = A.concatenateHorizontal(B);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixConcatenateHorizontalException1() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5}});
+        String expected = MatrixErrorType.RowDimensionMismatch.getMessage();
+
+        Exception thrown = assertThrows(MatrixException.class, () -> A.concatenateHorizontal(B));
+        assertEquals(expected, thrown.getMessage());
+    }
+
+    @Test
+    public void testMatrixConcatenateHorizontalException2() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{5}, {6}, {7}});
+        String expected = MatrixErrorType.RowDimensionMismatch.getMessage();
+
+        Exception thrown = assertThrows(MatrixException.class, () -> A.concatenateHorizontal(B));
+        assertEquals(expected, thrown.getMessage());
     }
 
 }
