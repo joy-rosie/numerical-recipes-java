@@ -114,6 +114,7 @@ public class MatrixTest {
         double[][] actual = Matrix.copyArray(array, n, m);
 
         assertArrayEquals(expected, actual);
+        // array1 == array2 check if it **is the same object** rather than comparing the contents
         assertNotSame(expected, actual);
     }
 
