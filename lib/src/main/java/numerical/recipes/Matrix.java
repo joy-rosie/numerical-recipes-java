@@ -74,7 +74,7 @@ public class Matrix {
     }
 
     public Matrix add(Matrix B) throws Exception {
-        Matrix C = new Matrix(this.n, this.m);
+        Matrix C = new Matrix(B.n, B.m);
         try {
             for (int i=0; i < this.n; i++) {
                 for (int j=0; j < this.m; j++) {
