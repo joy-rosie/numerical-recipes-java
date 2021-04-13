@@ -67,7 +67,10 @@ public class Matrix {
     }
 
     public boolean equals(Matrix B) throws Exception {
-        return Arrays.deepEquals(this.array, B.array);
+        // "short circuit evaluation" where we do not need to do deep equals if n or m do not match
+        // https://stackoverflow.com/questions/16606021/two-conditions-in-one-if-statement-does-the-second-matter-if-the-first-is-false
+        // https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op2.html
+        return this.n == B.n && this.m == B.m && Arrays.deepEquals(this.array, B.array);
     }
 
     public Matrix add(Matrix B) throws Exception {
