@@ -279,4 +279,56 @@ public class Matrix {
         return M.getSubMatrix(0, M.n - 1, this.m, M.m - 1);
     }
 
+
+    public static Matrix identity(int n) throws Exception {
+        double[][] array = new double[n][n];
+        for (int i=0; i < n; i++) {
+            for (int j=0; j < n; j++) {
+                if(i == j) {
+                    array[i][j] = 1;
+                } else {
+                    array[i][j] = 0;
+                }
+            }
+        }
+        return new Matrix(array);
+    }
+
+    public static Matrix inverseViaGaussJordan(Matrix A) throws Exception {
+        if(A.n != A.m) {
+            throw new MatrixException(MatrixErrorType.NotSquare);
+        }
+        Matrix identity = Matrix.identity(A.n);
+        Matrix augmentedMatrix = A.concatenateHorizontal(identity);
+        Matrix gaussJordan = gaussJordan(augmentedMatrix);
+        return gaussJordan.getSubMatrix(0, A.n - 1, A.n, 2*A.n-1);
+    }
+
+    public static Matrix gaussJordan(Matrix inputA) throws Exception {
+        Matrix A = new Matrix(inputA);
+        // https://www.codesansar.com/numerical-methods/matrix-inverse-using-gauss-jordan-method-pseudocode.htm
+        // Create a diagonal matrix
+        for(int i=0;i<A.n;i++) {
+            if(A.array[i][i] == 0) {
+                throw new MatrixException(MatrixErrorType.NonInvertible);
+            }
+            // Make each element in the column zero by taking a multiple of the row which contains the
+            // diagonal element of that column
+            for(int j=0;j<A.n;j++) {
+                if(i != j) {
+                    double ratio = A.array[j][i]/A.array[i][i];
+                    for(int k=0;k<A.m;k++) {
+                        A.array[j][k] = A.array[j][k] - ratio * A.array[i][k];
+                    }
+                }
+            }
+        }
+        // Normalise the diagonals
+        for(int i=0;i<A.n;i++) {
+            for(int j=A.n;j<A.m;j++) {
+                A.array[i][j] = A.array[i][j]/A.array[i][i];
+            }
+        }
+        return A;
+    }
 }

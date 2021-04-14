@@ -6,6 +6,7 @@ public enum MatrixErrorType {
     ColumnDimensionMismatch("Column dimensions of matrices incompatible to perform the operation."),
     AddDimensionMismatch("Dimensions of matrices are not the same. When adding matrices the dimensions must be equal."),
     MultiplyDimensionMismatch("Dimensions of matrices are not the same. When multiplying matrices the inner dimensions must agree."),
+    NotSquare("The matrix is not square."),
     NonInvertible("This matrix is not invertible.");
 
     private final String message;

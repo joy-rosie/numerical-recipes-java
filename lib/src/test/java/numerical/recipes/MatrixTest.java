@@ -594,4 +594,89 @@ public class MatrixTest {
         assertTrue(expected.equals(M));
     }
 
+//    --------------------------Test Identity---------------------------------------------------------------------------
+    @Test
+    public void testMatrixStaticMethodIdentityTwoDimension() throws Exception {
+        Matrix expected = new Matrix(new double[][]{{1, 0}, {0, 1}});
+        Matrix I = Matrix.identity(2);
+        assertTrue(expected.equals(I));
+    }
+
+    @Test
+    public void testMatrixStaticMethodIdentityOneDimension() throws Exception {
+        Matrix expected = new Matrix(new double[][]{{1}});
+        Matrix I = Matrix.identity(1);
+        assertTrue(expected.equals(I));
+    }
+
+    @Test
+    public void testMatrixStaticMethodIdentityThreeDimension() throws Exception {
+        Matrix expected = new Matrix(new double[][]{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
+        Matrix I = Matrix.identity(3);
+        assertTrue(expected.equals(I));
+    }
+
+    // TODO: Add more tests for the gaussJordan function specifically
+    @Test
+    public void testMatrixStaticMethodGaussJordanIdentity() throws Exception {
+        Matrix invertible = new Matrix(new double[][]{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
+        Matrix I = Matrix.gaussJordan(invertible);
+        assertTrue(invertible.equals(I));
+    }
+// TODO: sort this test out
+//    @Test
+//    public void testMatrixStaticMethodGaussJordanNonTrivial2Dimension() throws Exception {
+//        Matrix invertible = new Matrix(new double[][]{{1, 2, 1, 0}, {3, 4, 0, 1}});
+//        Matrix I = Matrix.gaussJordan(invertible);
+//        Matrix expected = new Matrix(new double[][] {{1, 0, -2, 1}, {0, 1, 1.5, -0.5}});
+//        assertTrue(expected.equals(I));
+//    }
+
+    @Test
+    public void testMatrixStaticMethodGaussJordanNonTrivialSimple3Dimension() throws Exception {
+        Matrix invertible = new Matrix(new double[][] {{1, 1, 0, 1, 0, 0},{0, 1, 0, 0, 1, 0},{1, 0, 1, 0, 0, 1}});
+        Matrix I = Matrix.gaussJordan(invertible);
+        Matrix expected = new Matrix(new double[][] {{1, 0, 0, 1, -1, 0},{0, 1, 0, 0, 1, 0},{0, 0, 1, -1, 1, 1}});
+        assertTrue(expected.equals(I));
+    }
+
+    // --------------------------------------Test inverse---------------------------------------------------------------
+    @Test
+    public void testMatrixStaticMethodInverseIdentity() throws Exception {
+        Matrix invertible = new Matrix(new double[][]{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
+        Matrix I = Matrix.inverseViaGaussJordan(invertible);
+        assertTrue(invertible.equals(I));
+    }
+
+    @Test
+    public void testMatrixStaticMethodInverseNonTrivial2Dimension() throws Exception {
+        Matrix invertible = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix I = Matrix.inverseViaGaussJordan(invertible);
+        Matrix expected = new Matrix(new double[][] {{-2, 1}, {1.5, -0.5}});
+        assertTrue(expected.equals(I));
+    }
+
+    @Test
+    public void testMatrixStaticMethodInverseNonTrivialSimple3Dimension() throws Exception {
+        Matrix invertible = new Matrix(new double[][] {{1, 1, 0},{0, 1, 0},{1, 0, 1}});
+        Matrix I = Matrix.inverseViaGaussJordan(invertible);
+        Matrix expected = new Matrix(new double[][] {{1, -1, 0},{0, 1, 0},{-1, 1, 1}});
+        assertTrue(expected.equals(I));
+    }
+
+    // TODO: Need to solve rounding issue for this test
+//    @Test
+//    public void testMatrixStaticMethodInverseNonTrivial3Dimension() throws Exception {
+//        Matrix invertible = new Matrix(new double[][]{{1, 1, 0}, {0, 3, 2}, {2, 0, 1}});
+//        Matrix I = Matrix.Inverse(invertible);
+//
+//        Matrix expected = new Matrix(new double[][]
+//                {{3.0/7.0, -1.0/7.0, 2.0/7.0},
+//                {4.0/7.0, 1.0/7.0, -2.0/7.0},
+//                {-6.0/7.0, 2.0/7.0, 3.0/7.0}});
+//
+//        assertTrue(expected.equals(I));
+//    }
+
+
 }
