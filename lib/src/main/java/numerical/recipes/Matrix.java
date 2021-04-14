@@ -212,4 +212,71 @@ public class Matrix {
         return A.concatenateHorizontal(B);
     }
 
+    @Override
+    public String toString() {
+        return String.join("]\n", Arrays.deepToString(this.array).split("],"));
+    }
+
+    public Matrix getSubMatrix(int iStart, int iEnd, int jStart, int jEnd) throws Exception {
+        Matrix M = new Matrix(iEnd - iStart + 1, jEnd - jStart + 1);
+        for (int i = 0; i < M.n; i++) {
+            System.arraycopy(this.array[i + iStart], jStart, M.array[i], 0, M.m);
+        }
+        return M;
+    }
+
+    public Matrix GaussJordanElimination(Matrix B) throws Exception {
+
+        // Gauss-Jordan Elimination
+        // The following operations are allowed
+        // 1) Swap rows
+        // 2) Multiply row by non zero scalar
+        // 3) Add one row to the multiple of another
+        // We only use (2) and (3) for now
+        // We concatenate the two matrices
+        // First we make "upper triangular" matrix
+        // Then we remove all "non diagonal" values
+
+        Matrix M = this.concatenateHorizontal(B);
+
+        System.out.println(M);
+        // Normalize first row by the leading coefficient
+        double currentRowLeadingCoefficient = M.array[0][0];
+        for (int j=0; j < M.m; j++) {
+            M.array[0][j] = M.array[0][j] / currentRowLeadingCoefficient;
+        }
+        System.out.println(M);
+
+        for (int i=1; i < M.n; i++) {
+            // Better to declare inside for loop
+            // https://stackoverflow.com/questions/4501482/java-declaring-variables-in-for-loops
+            double previousRowLeadingCoefficient = M.array[i][i-1];
+            // Subtract previous row multiplied by leading coefficient from current row
+            for (int j=0; j < M.m; j++) {
+                M.array[i][j] = M.array[i][j] - previousRowLeadingCoefficient * M.array[i-1][j];
+            }
+            currentRowLeadingCoefficient = M.array[i][i];
+            // Normalize current row by leading coefficient
+            for (int j=0; j < M.m; j++) {
+                M.array[i][j] = M.array[i][j] / currentRowLeadingCoefficient;
+            }
+            System.out.println(M);
+        }
+
+        // Remove all non diagonal coefficients
+        for (int i=0; i < M.n; i++) {
+            for (int k=0; k < M.n; k++) {
+                if (i != k) {
+                    double currentRowCoefficientToRemove = M.array[i][k];
+                    for (int j=0; j < M.m; j++) {
+                        M.array[i][j] = M.array[i][j] - currentRowCoefficientToRemove * M.array[k][j];
+                    }
+                }
+            }
+            System.out.println(M);
+        }
+
+        return M.getSubMatrix(0, M.n - 1, this.m, M.m - 1);
+    }
+
 }

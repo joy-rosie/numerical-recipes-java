@@ -468,4 +468,130 @@ public class MatrixTest {
         assertTrue(expected.equals(M));
     }
 
+    // toString---------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixToString() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        String expected = "[[1.0, 2.0]\n [3.0, 4.0]]";
+
+        String string = A.toString();
+
+        assertEquals(expected, string);
+    }
+
+    // getSubMatrix-----------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixGetSubMatrix1() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 0;
+        int iEnd = 0;
+        int jStart = 0;
+        int jEnd = 0;
+        Matrix expected = new Matrix(new double[][]{{1}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixGetSubMatrix2() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 0;
+        int iEnd = 1;
+        int jStart = 0;
+        int jEnd = 1;
+        Matrix expected = new Matrix(new double[][]{{1, 2}, {4, 5}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixGetSubMatrix3() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 0;
+        int iEnd = 2;
+        int jStart = 0;
+        int jEnd = 1;
+        Matrix expected = new Matrix(new double[][]{{1, 2}, {4, 5}, {7, 8}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixGetSubMatrix4() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 0;
+        int iEnd = 1;
+        int jStart = 0;
+        int jEnd = 2;
+        Matrix expected = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixGetSubMatrix5() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 1;
+        int iEnd = 1;
+        int jStart = 1;
+        int jEnd = 1;
+        Matrix expected = new Matrix(new double[][]{{5}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixGetSubMatrix6() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 0;
+        int iEnd = 1;
+        int jStart = 1;
+        int jEnd = 2;
+        Matrix expected = new Matrix(new double[][]{{2, 3}, {5, 6}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+    @Test
+    public void testMatrixGetSubMatrix7() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        int iStart = 1;
+        int iEnd = 2;
+        int jStart = 1;
+        int jEnd = 2;
+        Matrix expected = new Matrix(new double[][]{{5, 6}, {8, 9}});
+
+        Matrix M = A.getSubMatrix(iStart, iEnd, jStart, jEnd);
+
+        assertTrue(expected.equals(M));
+    }
+
+
+    // GaussJordonElimination-------------------------------------------------------------------------------------------
+
+    @Test
+    public void testMatrixGaussJordonElimination() throws Exception {
+        Matrix A = new Matrix(new double[][]{{1, 2}, {3, 4}});
+        Matrix B = new Matrix(new double[][]{{1, 0}, {0, 1}});
+        Matrix expected = new Matrix(new double[][]{{-2, 1}, {1.5, -0.5}});
+
+        Matrix M = A.GaussJordanElimination(B);
+
+        assertTrue(expected.equals(M));
+    }
+
 }
